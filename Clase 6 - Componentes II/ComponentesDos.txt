@@ -1,0 +1,33 @@
+Temario de la clase
+
+* Creación de componentes en angular
+* Examinando código fuente de la App (despues de incluir un par de componentes)
+* Componentes inline (Que es inline?)
+
+
+No es necesario ingresar una carpeta "componente" dentro de otra.
+Visualmente podemos crear todas nuestras carpetas al mismo "nivel",
+que el resultado visual será el mismo. En el caso de borrar nuestros <app-empleado>
+dentro de nuestro html empleados y pegarlo dentro de nuestro app.component.html, veremos
+que visualmente es lo mismo y al ingresar a nuestra consola no nos va a devolver un objeto
+dentro de otro objeto, sino objetos separados.
+
+
+Componentes inline (CSS y HTML - Recomendable sólo en caso de baja cantidad de código)
+
+Muchas veces cuando tenemos que realizar apps pequeñas sin mucho contenido, podemos optar por
+aplicar el código directamente dentro de nuestros componentes y no tener que referenciar un archivo
+en ellos. por ejemplo, si tenemos que hacer unos pocos cambios a nuestros estilos, podemos hacerlo
+dentro de nuestro componente "empleado.component.css", a continuación vamos a nuestro archivo 
+empleado.component.ts, comentamos nuestro styleUrls (archivo externo), para que no lo reconozca.
+A continuación agregamos el código "styles:["p{background-color:red;}"]", como componente. Basícamente
+declaramos el CSS dentro del llamado a nuestro componente.
+Así como lo hicimos con el CSS, también lo podemos hacer con nuestro HTML. Vamos a comentar nuestro
+"templateUrl: './empleado.component.html'," dentro de nu"estro empleado.component.ts y vamos a llamar
+en su lugar a "template: <p> aquí va un empleado </p>.
+
+En el caso de querer crear un componente inline de manera automática es:
+
+1) vamos a la consola miPrimeraApp y tipeamos  "ng g c nombreCarpeta -s (acá declaramos que es inline) -t (en este caso los template también
+se crearan inline)
+2) A continuación nos va a crear una carpeta con sólo dos archivos, uno .ts y otro spec.ts

@@ -1,0 +1,102 @@
+Clase n° 5 Componentes
+
+Temario
+
+* Creacion de componentes en angular
+Los componentes se componen de dos partes:
+
+1) Decorador: Selector - Template - style
+
+2) Clase: Propiedades - Métodos - constructor
+
+A la vez, también podemos crear componentes dentro de nuestro componente y así sucesivamente. Una mamushka.
+Una vez creados estos componentes podemos insertarlos en nuestro HTML. De ahí SPA (Simple Page Aplication)
+
+Podemos crear nuestros componentes de dos maneras:
+
+1) Manual
+
+2) Automática (Command Line Interface)
+
+Cómo vamos a practicar la creación de nuestros componentes?
+Vamos a crear un componente al cual vamos a llamar "empleados" (a modo jerarquico), luego vamos a crear
+otro componente llamado "empleados" para insertarlo en él que creamos anteriormente, para luego repetirlo una vez más.
+Una vez creados estos componentes los vamos a insertarlo en nuestro HTML.
+
+
+
+Empezamos:
+
+Vamos a ir a "miPrimeraApp" y a abrir una nueva terminal, una vez allí tipeamos "cd miPrimeraApp" para dirigirnos
+a nuestra carpeta. A continuación tipeamos "ng serve -0" y ahí levantamos el servidor
+
+Una vez hagamos esto vamos a dirigirnos a nuestra carpeta "src" y a continuación vamos a crear una carpeta dentro de ella, con el nombre "empleados"
+Dentro de ella vamos a crear varios archivos un con extensíon "ejemplo.component.css", otra otro "ejemplo.component.html", otra  "ejemplo.component.ts",
+Observar que estamos creando carpeta para todos nuestros archivos "component" excepto para ".spec.ts", ese archivo todavía no lo vamos a usar.
+Al crear nuestros componentes, vemos que las originales se componen de "clase" y "decorador" por lo tanto los nuevos componentes también deben 
+contener una "clase" y un "decorador".
+
+
+Dentro de nuestro archivo .ts
+
+Creación de Clase:
+
+Una vez creamos nuestro archivo, tenemos que construir nuestra clase, esa clase va a tener que tener la instrucción "export". Lo que permite esta instrucción
+es que podamos acceder a esta clase por fuera de nuestro archivo. Quedaría entonces "export class ejemploComponent{ todo lo que queramos dentro }.
+
+Creación de Decorador:
+
+Vamos a iniciar con @Component({ selector: "app-empleados",
+                                 templateUrl: "./empleados.component.html"
+                                 styleUrls: ['./app.component.css']
+                                 })
+
+
+
+Dentro de nuestro archivo empleados.component.html
+
+Dentro de este podemos poner un <h1 style="text-align: center;"> Empleados de la empresa</h1>
+
+
+Dentro de nuestro empleaods.component.CSS
+
+Por ahora no vamos a trabajar dentro de este archivo.
+
+
+Registrar nuestra app
+
+Una vez creados nuestros archivos fundamentales de nuestra app, tenemos que registrarla.
+No basta solamente con crearla, sino que debemos dirigirnos hacia "app.module.ts" y dentro de la zona:
+ declarations: [
+    AppComponents,
+    EmpleadosComponent <--- Nuestra nueva app.
+]
+
+
+Una vez creado nuestro componente, podemos ir a nuestro archivo "app.component.html" y mediante el comando
+<app-empleados></app-empleados> podemos insertar nuestro nuevo componente. (Ingresamos "app-" primero
+ya que nuestra carpeta "empleados" se encuentra dentro de nuestra carpeta "app")
+
+
+
+Un componente dentro de otro componente:
+
+Ahora para crear un segundo componente dentro del componente que acabamos de crear.
+Este lo vamos a crear de manera "automática" a través del CLI (Command Line Interface),
+también llamada terminal. En caso de que no la podamos visualizar y ya se encuentre nuestro
+servidor funcionando, vamos a ir a la barra superior de opciones de VSC, en "view" ingresamos "terminal"
+o bien ingresamos los comandos "ctrl + ñ". 
+La ventaja que nos brinda VSC es que podemos trabajar en varias terminales, ingresando el botón "+" que se
+encuentra en la parte superior derecha de nuestra terminal, también podemos ver todas las
+terminales que vamos creando a la derecha en el listado.
+Para podoer crear otro componente de manera automática en nuestra nueva temrinal:
+
+1) Debemos desplazarnos hacia nuestra carpeta miPrimeraApp: cd miPrimeraApp
+2) debemos ingresar el comando "ng generate component empleado" también podemos resumirlo en
+"ng g c empleado"
+
+A continuación, vamos a poder ver nuestro nuevo componente creado "empleado" dentro de la carpeta "app".
+Observar que esta carpeta ya cuenta con todos los archivos necesarios para funcionar:
+.css, .html, .spec.ts, .ts. De esta manera nos ahorramos mucho tiempo.
+Una vez, ingresamos a nuestro nuevo archivo .html de nuestra "nuevo componente" reemplazamos el texto
+"component works" por "aquía iría un empleado" y luego llamamos a nuestro "app-empleado" en nuestro html de "empleados".
