@@ -1,0 +1,97 @@
+Clase n° 8 - Interpolación II
+
+Temario:
+
+* Para que sirve
+* Como se usa
+* Ejemplos con mayor dificultad
+
+
+ Teniendo en cuenta la clase anterior, donde vimos valores dinamicos
+ y valores estaticos, vimos que podemos modificar nuestros textos dinamicos
+ a traves de una serie de pasos. Pero que sucede si nuestro texto dinamico
+ está determinado por un input.
+ Haciendo esto, vamos a poder ver el cambio de nuestro dato de manera instantanea
+
+ Vamos a crear un input (texto), dónde ingresaremos el nuevo dato, debajo irá un botón
+"submit", que al pulsarlo modificará el dato existente de nuestra empresa, por el dato ingresado
+en el cuadro de texto. 
+
+1) Vamos a ir a nuestro archivo "empleado.component.html"
+
+2) Ingresaremos un texto estatico debajo de todo 
+
+introduce la empresa: <input type="text>
+
+<br/>
+<br/> <--- saltos de línea
+
+<input type="button" value="dale!"/>
+
+
+
+Cómo vamos a hacer para reemplazar nuestro dato?
+
+1) Vamos a dirigimos a nuestro archivo "empleado.component.ts"
+
+2) En el archivo "empleado.component.ts" vamos a comentar la clase "empresa" (de momento no la vamos a usar)
+
+3) A continuación vamos a identifcar nuestro <input type="text" #empresa> para eso
+tenemos que agregar dentro de nuestro input #elNombre 
+
+4) Para poder acceder a nuestro input a través de su nombre identificador vamos a tener que agregar la propiedad
+.value ej:
+
+<p> empresa del empleado: {{empresa.value}}</p>  <-- de esta manera toma el valor de #empresa 
+
+<br/>
+<br/>
+
+introduce la empresa: <input type="text" #empresa>
+
+<br/>
+<br/>
+
+<input type="button" value="dale!"/>
+
+
+Eventos:
+En programación decimos que los eventos, son desencadenantes de acciones.
+Para poder agregar nuestro evento al input, en este caso:
+
+<p> empresa del empleado: {{empresa.value}}</p>  <-- de esta manera toma el valor de #empresa 
+
+<br/>
+<br/>
+
+introduce la empresa: <input type="text" #empresa>
+
+<br/>
+<br/>
+
+<input type="button" value="dale!" (click)="llamaEmpresa(empresa.value)"/>
+
+Observar cómo hacemos el llamado al evento, luego a la función y luego le pasamos los
+parámetros empresa.value, ahora tenemos que declarar nuestra función "llamaEmpresa" en 
+nuestro archivo .ts
+Una vez en nuestro archivo empleado.component.ts:
+
+llamaEmpresa(value:string){
+    
+}
+
+Esto nos va a permitir que el texto ingresado en nuestro input modifique el texto
+dinámico que se encuentre dentro de "empresa del empleado"
+
+
+
+Podriamos prescindir de nuestro botón "dale!" solamente al escribir el texto dentro de nuestro input? Sí.
+
+Para eso tendriamos que recurrir al evento "keyup" que ocurre al levantar el dedo de una tecla.
+Vamos a eliminar nuestra función "llamaEmpresa" y el botón "dale!".
+Agregaremos el evento  (keyup)="0",  dentro de nuestro objeto "input type="text" #empresa" para que se desencade
+el evento al soltar desde la primera tecla que dejemos de apretar"
+
+" ver template reference variable en documentación angular "
+
+

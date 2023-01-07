@@ -1,0 +1,150 @@
+Clase n° 9 - Property binding
+
+Temario
+
+* Que es property binding? (ejemplos sencillos)
+
+
+Binding:
+
+En inglés hace referencia a "unión", "vinculo", "puente" 
+
+
+
+Property binding
+
+Supongamos que nosotros tenemos un objeto úbicado dentro nuestro archivo "template.html" (botón, menu de texto, objeto desplegable, imágen).
+Además tenemos una serie de propiedades ó caracteristas de nuestro objeto, úbicadas en nuestro archivo "typescript.ts" (ancho, largo, color, visibilidad, etc.).
+Lo que hace "property binding" es establecer una unión o enlace entre estas dos anteriores.
+Esto nos va a permitir la variabilidad de nuestros objetos, conforme el usuario los utilice.
+
+
+
+Nota al pie:
+Sabemos que muchas veces una aplicación Angular, conectará con bases de datos. Haremos una consulta a una base de datos, determinando por una acción y luego nuestro objeto
+va a variar sus propiedades determinado por los datos que tengamos en nuestra base de datos.
+
+
+En este caso vamos a trabajar con nuestro cuadro de texto (input)
+Sabemos que todos los objetos que se encuentren en nuestra aplicación tienen una serie de propiedades, por ej (width, weight, visibility, disable, etc.)
+Agregaremos al objeto la propiedad de "disable" y el estado "false" (No es property binding)
+
+
+<input type="text" #empresa (keyup)="0" disable=false> <-- Es al revés del sentido común, false para deshabilitar, true para habilitar.
+
+
+Ahora vamos a aplicar property biding a nuestro input.
+Para ello, dentro de la clase EmpleadoComponent vamos a crear una propiedad, generalmente podemos ponerle el nombre que queramos, pero por convensión
+vamos a ponerle la palabra property seguida de su nombre ej. unNombreProperty=true.
+
+
+export class EmpleadoComponent {
+  nombre = "Juan";
+  apellido = "Díaz";
+  edad = 18;
+  //empresa = "sarasa"
+
+  habilitacionCuadro=true;
+
+}
+
+
+Lo que tenemos que hacer ahora es crear un biding entre la propiedad de nuestra clase y el objeto.
+
+
+<input type="text" #empresa (keyup)="0" [disabled]="habilitacionCuadro">
+
+
+En el caso de cambiar "habilitacionCuadro=false", el cuadro pasará a habilitarse
+
+
+
+Que pasaría si queremos que nuestro cuadro de texto se encuentre habilitado, sólo en el caso
+que nuestro usuario se haya registrado?
+
+Vamos a crear un checkbox en nuestro archivo "empleado.component.html", en el caso de que el usuario se encuentre
+registrado el checkbox va a aparecer tildado.
+
+
+<p> nombre del empleado: {{nombre}}</p>
+<p> apellido del empleado: {{apellido}}</p>
+<p> edad del empleado: {{edad}}</p>
+<p> empresa del empleado: {{empresa.value}}</p>
+
+<br/>
+<br/>
+
+introduce la empresa: <input type="text" #empresa (keyup)="0" [disabled]="habilitacionCuadro">
+    
+<br/>
+<br/>
+
+Resgistrado: <input type="checkbox" id="registro"/>
+
+
+Ahora dentro de nuestro archivo "empleado.component.ts" y vamos a crear otra propiedad:
+
+export class EmpleadoComponent {
+  nombre = "Juan";
+  apellido = "Díaz";
+  edad = 18;
+  //empresa = "sarasa"
+
+  habilitacionCuadro=true;
+
+  usuRegistrado=false;
+
+}
+
+
+Luego agregamos la propiedad "checked" a nuestro input
+
+Resgistrado: <input type="checkbox" id="registro" [checked]="usuRegistrado"/>
+
+
+A continuanción, regresando a nuestra clase "EmpleadoComponent", vamos a agregar una función:
+
+export class EmpleadoComponent {
+  nombre = "Juan";
+  apellido = "Díaz";
+  edad = 18;
+  //empresa = "sarasa"
+
+  habilitacionCuadro=true;
+
+  usuRegistrado=false;
+
+getRegistroUsuario(){
+
+    this.usuRegistrado=false;
+}    
+  
+  }
+
+}
+
+
+
+Cuando se activa o se desactiva la opción de registrado?
+Cuando la iteración llega al llamado de nuestra función y cambia el estado "usuRegistrado" (binding) de false a true.
+Si tuviesemos conexión con una base de datos, con usuarios ingresados en tabla. En caso de que el usuario
+haya hecho login y nuestra función determina que dicho usuario está registrado, cambiará el estado de false a true.
+
+
+<p> nombre del empleado: {{nombre}}</p>
+<p> apellido del empleado: {{apellido}}</p>
+<p> edad del empleado: {{edad}}</p>
+<p> empresa del empleado: {{empresa.value}}</p>
+
+<br/>
+<br/>
+
+introduce la empresa: <input type="text" #empresa (keyup)="0" [disabled]="habilitacionCuadro">
+    
+<br/>
+<br/>
+
+Resgistrado: <input type="checkbox" id="registro" [checked]="usuRegistrado"/>
+
+{{getRegistroUsuario}}
+

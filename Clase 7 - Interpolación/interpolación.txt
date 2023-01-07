@@ -1,0 +1,110 @@
+Temario Clase n° 7 - Interpolación
+
+* Interpolación de Strings:
+* Para que sirve?
+* Cómo se utiliza. Ejemplos sencillos.
+
+La Interpolación nos permite insertar texto dinámico (texto cambiante) que se encuentra dentro de un string,
+a nuestro html. Es similar a concatenar ${}, salvo que en la interpolación se utilzan {{ }} 
+Cómo vamos a escribirlo?:
+
+En nustro archivo app.component.ts:
+
+CurrentCustomer = 'María'
+
+En nuestro archivo app.component.html:
+
+<h3>Current customer: {{ CurrentCustomer }} </h3>
+
+Vamos a poder observar este tipo casos por ejemplo, cuando ingresemos nuestro usuario en una app
+y a continuación nos brinden un saludo de bienvenida con nuestro nombre de usuario.
+En la interpolación vamos a tener la posibilidad de hacer llamados a métodos de JS {{ 1 + 1 getVal()}},
+Angular evalúa todas las expresiones entre llaves dobles y convierte los resultados en expresiones de cadena.
+
+
+Ver material adicional:
+https://docs.angular.lat/guide/interpolation
+
+
+Ejemplo:
+
+Vamos a aplicar un ejemplo de interpolación a nuestra app "miPrimeraAPP".
+Tengamos en cuenta cuál es el entorno dónde deseamos que aparezca, en caso de quisieramos
+que figure en nuestro título "empleados de la empresa" pues deberiamos ingresarlo en nuestro
+componente "empleados", si quisieramos que aparezca dónde se encuentra el saludo, tendríamos que ir
+a nuestro componente principal html. Pero en este caso lo vamos a ingresar donde figuran nuestros empleados.
+
+1) vamos a ir a empleado.component.ts
+
+2) export class EmpleadoComponent {
+
+    nombre = "Juan";
+    apellido = "Díaz";
+    edad = 18;
+    empresa = "sarasa"
+
+} 
+
+3) nos dirigimos a nuestro empleado.component.html y escribimos:
+    
+    <p> nombre del empleado: {{nombre}}</p>
+    <p> apellido del empleado: {{apellido}}</p>
+    <p> edad del empleado: {{edad}}</p>
+    <p> empresa del empleado: {{empresa}}</p>
+
+Cómo dijimos anteriormente lo que va a cambiar en nuestro html, será
+el texto dinámico que se encuentra dentrod de las llaves {{ ... }}
+
+Todo lo que NO se encuentre declarado entre llaves {{...}} y dentro de la etiqueta <p></p>
+pasa a convertirse en texto "estatico" por lo que no va a cambiar aunque el usuario interactue
+con el sistema.
+
+Llegado el caso, supongamos que en la interpolación de la edad de nuestro empleado, no es correcta:
+Podemos también modificarlo de este modo: 
+
+<p> edad del empleado: {{edad+18}}</p>.
+
+Digamos que nuestra interpolación permite expresiones algebraicas en ellas.
+
+Muchas veces, vamos a necesitar que nuestros datos se encuentren protegidos de cualquier
+tipo de cambio, debido a que, a través de otros archivos ts también se puede acceder
+a ellos y modificarlos. Para que esto no suceda vamos a "encapsular" datos usando modificadores de acceso (private).
+Una vez realizado esto, podemos acceder a ellos mediante el método "getter".
+Supongamos que nos encontramos en nuestro archivo "empleado.component.ts" dentro de la clase "EmpleadoComponent":
+Vamos a ingresar la palabra "private" antes de edad y eso nos va a permitir que sólo podamos visualizar ese dato,
+dentro de esa clase, dentro de ese archivo.
+Eso lo realizamos para protegidos de cualquier tipo de cambio que puedan a llegar a sufrir nuestros datos. EJ:
+
+export class EmpleadoComponent implements Onint{
+    nombre = "juan";
+    apellido = "Díaz";
+    private edad = 18;
+    empresa = "pildoras informaticas";
+
+    getEdad(){
+        return this.edad;
+    }
+}
+
+Una vez hagamos esto, vamos a ir a nuestro archivo empleado.component.html:
+
+    <p> nombre del empleado: {{nombre}}</p>
+    <p> apellido del empleado: {{apellido}}</p>
+    <p> edad del empleado: {{getEdad()}}</p>
+    <p> empresa del empleado: {{empresa}}</p>
+
+De esta manera nos va a devolver el valor de la función que acabamos de crear
+
+
+Condicionales en nuestra interpolación
+Además de expresiones algebraicas podemos utilizar condicionales dentro de nuestra interpolación.
+
+* Operadores ternarios: para expresiones de tipo condicional booleano (true - false)
+
+Sitaxis:
+
+condición a evaluar ? valor si verdad:valor si falso 
+
+Cómo lo utilizariamos en nuestro código?
+
+<p> edad del empleado: {{edad<18 ? "menor de edad":"mayor de edad"}}</p>

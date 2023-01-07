@@ -1,0 +1,239 @@
+Clase n° 10 - Event binding
+
+Temario:
+
+* Que es event binding? (Ejemplos sencillos)
+
+
+Que es event binding?
+La palabra "event" hace mención al desencadenante de la acción (click, apretar una tecla, pasar el cursor por encima de una imágen..) 
+"binding" a la unión, puente, etc..
+Nuestros objetos siempre se van a encontrar ubicados en nuestro archivo .html, mientras que nuestras: propiedades y funciones (o acciones), 
+en nuestro archivo .ts.
+
+
+Dirección event binding:
+Nuestro event binding puede tener dos orientaciones:
+
+objeto (.html) ---> función (.ts)
+
+objeto (.html) <--- función (.ts)
+
+
+
+En esta clase vamos a ver la orientación objeto (.html) ---> función (.ts)
+
+
+Cómo vamos a crear nuestro event binding?
+
+Vamos a hacer que nuestro checkbox se encuentre desactivado, para luego cuando lo tildemos, aparezca un cuadro emergente.
+Dentro de nuestro archivo .ts, en la clase EmpleadoComponent, vamos a agregar la función setUsuarioRegistrado(), con un alert dentro.
+
+
+export class EmpleadoComponent {
+  nombre = "Juan";
+  apellido = "Díaz";
+  edad = 18;
+  //empresa = "sarasa"
+
+  habilitacionCuadro=true;
+
+  usuRegistrado=false;
+
+getRegistroUsuario(){
+
+    this.usuRegistrado=false;
+}    
+
+setUsuarioRegistrado(){
+
+alert("el usuario se acaba de registrar");
+
+}
+  
+  }
+
+}
+
+Una vez declarada la función, tenemos que agregar el evento dentro de nuestro objeto y para ello tenemos que establecer cuál será el desencadenante,
+para este ejemplo vamos a declarar el ejemplo (click)="elNombreDeLafuncion()".
+Entonces, una vez en nuestro archivo .html:
+
+
+<p> nombre del empleado: {{nombre}}</p>
+<p> apellido del empleado: {{apellido}}</p>
+<p> edad del empleado: {{edad}}</p>
+<p> empresa del empleado: {{empresa.value}}</p>
+
+<br/>
+<br/>
+
+introduce la empresa: <input type="text" #empresa (keyup)="0" [disabled]="habilitacionCuadro">
+    
+<br/>
+<br/>
+
+Resgistrado: <input type="checkbox" id="registro" [checked]="usuRegistrado" (click)="setUsuarioRegistrado()"/>
+
+{{getRegistroUsuario()}}
+
+Nota:
+Tomemos en cuenta el ejemplo anterior. Vamos a desencadenar el event binding gracias al evento "click", pero bien podriamos 
+elegir cualquiera de los eventos posibles (keypress, keyup, keydown, mouseover)
+
+
+
+Vamos a realizar un ejemplo utilizando lo visto en la clase anterior e interpolación
+
+Actualmente cuando hacemos click en nuestro checkbox "Registrado", nos aparece un cartel
+informando que "el usuario se acaba de registrar", en este caso vamos a tener un texto en nuestro html
+y cuando clickeamos el checkbox va a cambiar.
+
+1) Vamos a nuestro archivo "empleado.component.ts" y debajo de las propiedades, habilitacionCuadro y usuRegistrado,
+vamos a crear una nueva llamada "textoDeRegistro"
+
+export class EmpleadoComponent {
+  nombre = "Juan";
+  apellido = "Díaz";
+  edad = 18;
+  //empresa = "sarasa"
+
+  habilitacionCuadro=true;
+
+  usuRegistrado=false;
+
+  textoDeRegistro="no hay nadie registrado"
+
+
+2) A continuación en nuestro archivo .html, mediante interpolación, vamos a hacer que aparezca nuestro texto.
+
+<br/>
+<br/>
+
+introduce la empresa: <input type="text" #empresa (keyup)="0" [disabled]="habilitacionCuadro">
+    
+<br/>
+<br/>
+
+{{textoDeRegistro}} <--- interpolación
+
+<br/>
+<br/>
+
+Resgistrado: <input type="checkbox" id="registro" [checked]="usuRegistrado" (click)="setUsuarioRegistrado()"/>
+
+{{getRegistroUsuario()}}
+
+
+3) Ahora lo que tenemos que hacer es cambiar en nuestra función "setUsuarioRegistrado()", vamos a cambiar nuestro
+alert, por "this.textoDeRegistro="el usuario se acaba de registrar""
+
+
+  textoDeRegistro="no hay nadie registrado";
+
+  getRegistroUsuario(){
+
+    this.textoDeRegistro="el usuario se acaba de registrar";
+}
+
+
+
+
+Vamos a complicarlo un poco más...
+
+Que pasaría si, en vez de tener un botón checkbox, tenemos dos radio buttons?
+La particularidad de los botones de radio, es que sólo uno de ellos puede estar activado
+al mismo tiempo.
+En la mayoría de los casos el checkbox se utiliza en encuestas o diferentes funcionalidades en las que, se pueden
+obtener 1 o más respuestas.
+
+Lo que vamos a necesitar en este caso sería pasarle un parámetro (objeto tipo evento) a la función alojada en nuestro event binding:
+
+(click)=unaFuncionEjemplo(elParametro)
+
+
+1) Lo primero que vamos a hacer es cambiar nuestro botón de ckeckbox a radio, en nuestro html.
+Y además vamos a agregar otro botón de radio debajo acompañado del texto "No registrado"
+
+
+{{textoDeRegistro}} <--- interpolación
+
+<br/>
+<br/>
+
+Resgistrado: <input type="radio" name="nRegistro" id="registro" [checked]="usuRegistrado" (click)="setUsuarioRegistrado()"/><br/>
+No registrado: <input type="radio" name="nRegistro"/>  <--- Tener en cuenta que tienen el mismo (name="nRegistro")
+
+{{getRegistroUsuario()}}
+
+
+Nota:
+Muchas veces lo que no vemos al clickear un evento, es que por detrás se está creando un "objeto del tipo evento".
+Hay que tener en cuenta que ese "objeto del tipo evento", cuenta con propiedades y métodos (cómo todos los objetos),
+si somos capaces de capturar este objeto que se crea de tipo event, esas propiedades y métodos que tienen nos van a ayudar
+a realizar ciertas acciones en nuestra página.
+
+Cómo vamos a "capturar" este objeto?
+
+1) En nuestro html dentro de nuestro event binding, vamos a pasarle cómo parámetro de la función este objeto que se ha creado.
+Dentro de los parámetros debemos ingresar ($event) ej:
+
+<br/>
+<br/>
+
+Resgistrado: <input type="radio" name="nRegistro" id="registro" [checked]="usuRegistrado" (click)="setUsuarioRegistrado($event)"/><br/>
+No registrado: <input type="radio" name="nRegistro"/>  <--- Tener en cuenta que tienen el mismo (name="nRegistro")
+
+{{getRegistroUsuario()}}
+
+
+2) Siguiente, vamos a nuestro archivo html y le indicamos a la función en sus parámetros, un nombre y un tipo:
+
+setUsuarioRegistrado(event:Event){
+
+  this.textoDeRegistro="el usuario se acaba de registrar"
+  
+}
+
+
+3) Una vez hayamos "capturado" ese objeto llamado "event", ahora podemos poner lo que deseemos dentro de nuestra función,
+en este caso vamos a usar la propiedad .target, que nos va a mostrar el objeto del evento:
+
+setUsuarioRegistrado(event:Event){
+
+  alert(event.target) <--- lo que nos va a aparecer en el menú intelisense de vsc son: cuadraditos lila (método, que puede hacer) y el rectangulo en azul (propiedad, cómo es)
+  
+}
+
+
+4) Una vez hecho esto, nuestro alert va a mostrar [object HTMLInputElement], gracias a la propiedad .target, ahora sabemos que estamos manipulando
+un objeto del tipo "HTMLInputElement". Entonces vamos a ir a nuestro html y le asignaremos "value="si"" a Registrado y "value="no"" a "No Registrado",
+esto lo vamos a hacer para poder "capturar", con nuestro [object HTMLInputElement], estas dos propiedades que agregamos a nuestros HTMLInputs.
+
+<br/>
+<br/>
+
+Resgistrado: <input type="radio" value="si" name="nRegistro" id="registro" [checked]="usuRegistrado" (click)="setUsuarioRegistrado($event)"/><br/>
+No registrado: <input type="radio" value="no" name="nRegistro" (click)="setUsuarioRegistrado($event)"/> <--- también vamos a tener que agregar el event binding a nuestro otro input.
+
+{{getRegistroUsuario()}}
+
+
+
+5) En el caso de que hayamos pulsado dentro del input "Registrado" el parametro de "event" de nuestra función "setUsuarioRegistrado" será igual a "si",
+en el caso de clickear en el input "No Registrado" será igual a "no".
+Por lo que sabemos vamos a tener dos posibilidades entonces dentro de nuestra función vamos a establecer un if:
+
+setUsuarioRegistrado(event:Event){
+
+  if((<HTMLInputElement>event.target).value=="si"){   <--- accedemos al objeto del evento
+  this.textoDeRegistro="El usuario se acaba de registrar";
+  } else{
+    this.textoDeRegistro="No hay nadie registrado";
+  }
+  
+}
+
+
+Material adicional:
+Leer documentación de Angular acerca de Event binding
